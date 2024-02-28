@@ -69,3 +69,16 @@ Esta es una adición breve a la guía de ejecución e instalación listada [**aq
     - Componentes reutilizables de `JSX` para presentación: `src/components`.
     - Componentes de `JSX` para lógica DOM y datos: `src/containers`.
     - Componentes de `JSX` para etapas de navegación / pantallas: `src/screens`.
+
+## Control de versiones:
+
+- **Ramas**:
+    - Rama estable principal: `main`.
+    - Rama de desarrollo principal: `dev`.
+    - Sintaxis de rama para una funcionalidad `NOMBRE`: `dev-NOMBRE`.
+
+- **Política de ramas**:
+    - Evitar enviar `commits` directamente a `main` o `dev`.
+    - Trabajar cada funcionalidad, con nombre `NOMBRE` en su propia rama `dev-NOMBRE`, asociada a uno o varios `issues`. Cada rama es derivada de `dev`, y al estar terminada se unifica de vuelta hacia `dev`, cerrando los `issues` relacionados.
+    - Cuando `dev` sea lo suficientemente estable para una versión, se unifica hacia `main` y se etiqueta el último `commit` como un `release`. Preferiblemente, en cada `release` se anexe una versión empaquetada con extensión`.apk`. 
+    - Se considera una versión aquella que compile, ejecute en un margen razonable de error (preferiblemente ninguno), y sea usable en un tiempo válido.
