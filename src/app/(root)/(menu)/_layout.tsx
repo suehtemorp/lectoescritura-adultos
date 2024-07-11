@@ -25,7 +25,7 @@ export default function Layout() {
       >
         {/* Menu principal */}
         <Drawer.Screen
-          name="Home" // This is the name of the page and must match the url from root
+          name="Home"
           options={{
             headerTitle: () => ScoreHeader(score, "#cdeda3"),
             headerTitleAlign: 'center',
@@ -37,12 +37,24 @@ export default function Layout() {
 
         {/* Página de ejercicios */}
         <Drawer.Screen
-          name="Excercises" // This is the name of the page and must match the url from root
+          name="SelectExcercise"
           options={{
             headerTitle: () => ScoreHeader(score, "#e6e0e9"),
             headerTitleAlign: 'center',
             headerStyle: {
-              backgroundColor: "green",
+              backgroundColor: "#7bd79a",
+            }
+          }}
+        />
+
+        {/* Sub-página de ejercicios */}
+        <Drawer.Screen
+          name="SelectLevel/[type]"
+          options={{
+            headerTitle: () => ScoreHeader(score, "#e6e0e9"),
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: "#7bd79a",
             }
           }}
         />
@@ -88,7 +100,7 @@ const IconsDrawerContent = (props : any) => {
       {/* Icono de ejercicios */}
       <TouchableOpacity style={styles.drawerButton}
           onPress={() => {
-            props.navigation.navigate("Excercises");
+            props.navigation.navigate("SelectExcercise");
           }}
       >
         <Image

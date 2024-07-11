@@ -5,7 +5,7 @@ import LockedLevelIcon from "@/assets/images/locked_level_icon.svg"
 
 import { router } from 'expo-router';
 
-export default function Excercises () {
+export default function SelectLevel () {
 
 return (
     <View style={styles.background}>
