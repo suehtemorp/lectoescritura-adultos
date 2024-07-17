@@ -58,7 +58,20 @@ export default function Layout() {
             }
           }}
         />
+
+        {/* Sub-página de ejercicios */}
+        <Drawer.Screen
+          name="SelectLevel/Level1Demo"
+          options={{
+            headerTitle: () => ScoreHeader(score, "#e6e0e9"),
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: "#D7917B",
+            }
+          }}
+        />
       </Drawer>
+      
     </GestureHandlerRootView>
   );
 }
