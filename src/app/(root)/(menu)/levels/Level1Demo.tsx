@@ -1,8 +1,7 @@
 //Dependencias
-import { Text, View, StyleSheet, TouchableOpacity, ColorValue } from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
 //Imagenes usadas
-import { Image } from 'expo-image';
 import ImgAbrebo from "@/assets/images/Abrebotellas.jpeg"
 
 //Componentes de botones 

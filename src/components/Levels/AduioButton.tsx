@@ -1,5 +1,5 @@
 //Dependencias
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { TouchableOpacity, StyleSheet, View, Image } from 'react-native';
 import { Audio } from 'expo-av';
 
