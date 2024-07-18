@@ -1,10 +1,20 @@
 import { Text, View, StyleSheet, TouchableOpacity, ColorValue } from 'react-native';
+import { Audio } from 'expo-av';
+import { useEffect, useState } from 'react';
 
 import { Image } from 'expo-image';
 import VolumIcon from "@/assets/images/volum_icon.png"
 import ImgAbrebo from "@/assets/images/Abrebotellas.jpeg"
 
+
+
 export default function Level1Demo() {
+  const [sound, setSound] = useState();
+  async function playSound() {
+    const { sound } = await Audio.Sound.createAsync(require('@/assets/audio/Abrebotellas.m4a'));
+    setSound(sound);
+    await sound.playAsync();
+  }
   return (
     <View style={styles.background}>
       <View style={styles.iconGrid}>
@@ -15,7 +25,7 @@ export default function Level1Demo() {
         </View>
         <View style={styles.column}>
           <ImageContainer source={ImgAbrebo} />
-          <AudioButton color={"#D7917B"} />
+          <AudioButton color={"#D7917B"} playSound={playSound} />
         </View>
       </View>
     </View>
@@ -51,11 +61,10 @@ return (
 );
 }
 
-const AudioButton = (props: { color: ColorValue }) => {
+const AudioButton = (props: { color: ColorValue, playSound: () => void }) => { // Aceptamos la función playSound como propiedad
   return (
     <TouchableOpacity style={styles.iconButton}
-      onPress={() => {
-      }}
+    onPress={props.playSound}
     >
       <View
         contentFit="contain"
