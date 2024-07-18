@@ -1,34 +1,37 @@
+// UI de React Native
 import { Text, View, StyleSheet, TouchableOpacity, ColorValue } from 'react-native';
 
+// Controlador de navegación
 import { router } from 'expo-router';
 
-type LevelType = "Vocal" | "Simple" | "Ambigua";
+// Posibles tipos de niveles
+import { LevelClass } from '@/shared/Levels/LevelTypes';
 
-export default function SelectExcercise () {
-
-return (
-    <View style={styles.background}>
-        <View style={styles.optionGrid}>
-            <LevelTypeButton level={"Vocal"} color={"#7bd785"} />
-            <LevelTypeButton level={"Simple"} color={"#d7b27b"} />
-            <LevelTypeButton level={"Ambigua"} color={"#d7917b"} />
+// TODO: Usar colores de estilos
+export default function SelectLevelType () {
+    return (
+        <View style={styles.background}>
+            <View style={styles.optionGrid}>
+                <LevelTypeButton levelType={"Vowel"} color={"#7bd785"} />
+                <LevelTypeButton levelType={"SimpleConsonant"} color={"#d7b27b"} />
+                <LevelTypeButton levelType={"AmbiguousConsonant"} color={"#d7917b"} />
+            </View>
         </View>
-    </View>
-);
+    );
 }
 
-const LevelTypeButton = (props: {level : LevelType, color: ColorValue}) => {
+const LevelTypeButton = (props: {levelType : LevelClass, color: ColorValue}) => {
 return (
     <TouchableOpacity style={styles.iconButton}
           onPress={() => {
-            router.navigate("SelectLevel/" + props.level);
+            router.navigate("SelectLevel/" + props.levelType);
           }}
       >
         <View style={[styles.buttonContainer, {backgroundColor : props.color}]}>
             <Text style={styles.buttonText}> 
                 {
-                    props.level === "Vocal" ? "Vocales" : (
-                        props.level === "Simple" ?
+                    props.levelType === "Vowel" ? "Vocales" : (
+                        props.levelType === "SimpleConsonant" ?
                         "Consonantes simples" :
                         "Consonantes ambiguas"
                     )
@@ -39,6 +42,8 @@ return (
 );
 }
 
+// Estilos
+// TODO: Usar colores de estilos
 const styles = StyleSheet.create({
     background : {
         flex: 1,

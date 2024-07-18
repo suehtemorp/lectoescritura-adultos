@@ -1,22 +1,25 @@
-/**
- * Learn more about light and dark modes:
- * https://docs.expo.dev/guides/color-schemes/
- */
+// Dependencias
+// Hook para detección de tema activo del teléfono
+import { ColorValue, useColorScheme } from 'react-native';
 
-import { useColorScheme } from 'react-native';
+// Colores según tema / esquema de colores
+import ThemedColors from '@/constants/Colors/ThemedColors';
+import { MaterialPalette } from '@/shared/Colors/ColorTypes';
 
-import { Colors } from '@/constants/Colors';
+// Utilidad para definir ruta de color anidado
+import { NestedPathToType, NestedValue } from '@/shared/Utils/NestedPath';
 
 export function useThemeColor(
-  props: { light?: string; dark?: string },
-  colorName: keyof typeof Colors.light & keyof typeof Colors.dark
+  colorPath: NestedPathToType<MaterialPalette, ColorValue>
 ) {
+  // Inferir esquema de colores y paleta asociada
   const theme = useColorScheme() ?? 'light';
-  const colorFromProps = props[theme];
+  const themedPalette = ThemedColors[theme];
 
-  if (colorFromProps) {
-    return colorFromProps;
-  } else {
-    return Colors[theme][colorName];
-  }
+  // Obtener color asociado al esquema según ruta
+  const color : ColorValue = NestedValue<MaterialPalette, ColorValue>(
+    colorPath, themedPalette
+  );
+
+  return color;
 }
