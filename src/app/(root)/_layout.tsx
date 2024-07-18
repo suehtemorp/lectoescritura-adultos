@@ -1,3 +1,5 @@
+// Dependencias
+// Navegador de pila
 import { Stack } from 'expo-router';
 
 export default function RootLayout() {

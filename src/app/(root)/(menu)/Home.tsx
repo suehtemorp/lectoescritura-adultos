@@ -19,6 +19,8 @@ return (
 );
 }
 
+// Estilos
+// TODO: Usar colores de estilos
 const styles = StyleSheet.create({
     background : {
         flex: 1,
