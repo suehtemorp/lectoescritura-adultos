@@ -59,9 +59,9 @@ export default function Layout() {
           }}
         />
 
-        {/* Sub-página de ejercicios */}
+        {/* Página de ejercicio 1 */}
         <Drawer.Screen
-          name="SelectLevel/Level1Demo"
+          name="levels/Level1Demo"
           options={{
             headerTitle: () => ScoreHeader(score, "#e6e0e9"),
             headerTitleAlign: 'center',

@@ -26,7 +26,9 @@ return (
     <TouchableOpacity style={styles.iconButton}
           onPress={() => {
             if (props.level !== "locked") {
-                router.navigate("SelectLevel/Level1Demo");
+                if(props.level == 1){
+                    router.navigate("levels/Level1Demo");
+                }
             }
           }}
       >
