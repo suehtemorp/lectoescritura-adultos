@@ -7,7 +7,7 @@ return (
     <View style={styles.background}> 
         <Image
             source={AppBanner}
-            onError={(error : Error) => {
+            onError={(error) => {
                 console.error("Error loading image:", error);
             }}
 
@@ -19,6 +19,8 @@ return (
 );
 }
 
+// Estilos
+// TODO: Usar colores de estilos
 const styles = StyleSheet.create({
     background : {
         flex: 1,
