@@ -7,7 +7,7 @@ return (
     <View style={styles.background}> 
         <Image
             source={AppBanner}
-            onError={(error : Error) => {
+            onError={(error) => {
                 console.error("Error loading image:", error);
             }}
 
