@@ -1,55 +1,41 @@
-import { Text, View, StyleSheet, TouchableOpacity, ColorValue } from 'react-native';
+// UI de React Native
+import { View, StyleSheet } from 'react-native';
 
-import { Image } from 'expo-image';
-import LockedLevelIcon from "@/assets/images/locked_level_icon.svg"
+// Navegación y parámetros de URL
+import { useLocalSearchParams } from 'expo-router';
 
-import { router } from 'expo-router';
+// Botón de nivel
+import LevelButton from '@/components/Levels/LevelButton';
+
+// Tipos de niveles
+import {LevelClass} from "@/shared/Levels/LevelTypes"
 
 export default function SelectLevel () {
+    // Obtener tipo de nivel a usar en selección
+    const { type: levelType } = useLocalSearchParams<{ type: LevelClass }>();
+    
+    if (typeof levelType === "undefined") {
+        throw Error("Tipo de nivel indefinido en selección de niveles");
+    }
 
-return (
-    <View style={styles.background}>
-        <View style={styles.iconGrid}>
-            <LevelButton level={1} color={"#7bd785"} />
-            <LevelButton level={2} color={"#d7b27b"} />
-            <LevelButton level={3} color={"#d7917b"} />
-            <LevelButton level={"locked"} color={"grey"} />
-            <LevelButton level={"locked"} color={"grey"} />
-            <LevelButton level={"locked"} color={"grey"} />
+    // Mostrar botones para niveles
+    // TODO: Cargar niveles de almacenamiento, escoger colores programáticamente
+    return (
+        <View style={styles.background}>
+            <View style={styles.iconGrid}>
+                <LevelButton levelIndex={1} levelType={levelType} isBlocked={false} bgColor={"#7bd785"} />
+                <LevelButton levelIndex={2} levelType={levelType} isBlocked={false} bgColor={"#d7b27b"} />
+                <LevelButton levelIndex={3} levelType={levelType} isBlocked={false} bgColor={"#d7917b"} />
+                <LevelButton isBlocked={true} />
+                <LevelButton isBlocked={true} />
+                <LevelButton isBlocked={true} />
+            </View>
         </View>
-    </View>
-);
+    );
 }
 
-const LevelButton = (props: {level : number | "locked", color: ColorValue}) => {
-return (
-    <TouchableOpacity style={styles.iconButton}
-          onPress={() => {
-            if (props.level !== "locked") {
-                router.navigate("Home");
-            }
-          }}
-      >
-        <View
-          contentFit="contain"
-          style={[styles.buttonContainer, {backgroundColor : props.color}]}
-        >
-            {props.level === "locked" ? (
-                <Image
-                    source={LockedLevelIcon}
-                    style={styles.buttonImage}
-                />
-                ) : (
-                    <Text style={styles.buttonText}> 
-                        {props.level}
-                    </Text>
-                )
-            }
-        </View>
-      </TouchableOpacity>
-);
-}
-
+// Estilos
+// TODO: Usar colores de estilo
 const styles = StyleSheet.create({
     background : {
         flex: 1,
@@ -69,30 +55,4 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
     },
-    iconButton: {
-        width: 100,
-        height: 100,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    buttonContainer: {
-        width: "100%",
-        height: "100%",
-        borderWidth: 5,
-        borderRadius: 35,
-        justifyContent: "center",
-        alignContent: "center",
-        alignItems: "center",
-        overflow: 'hidden',
-        borderColor: "black",
-        backgroundColor: "white",
-    },
-    buttonImage : {
-        width: "80%",
-        height: "80%",
-    },
-    buttonText: {
-        fontSize: 60,
-        fontWeight: "bold",
-    }
 });
