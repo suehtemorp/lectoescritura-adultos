@@ -1,34 +1,38 @@
+//Dependencias
 import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, StyleSheet, View, Image } from 'react-native';
 import { Audio } from 'expo-av';
 
+//Imagenes utilizadas
 import VolumIcon from '@/assets/images/volum_icon.png';
 
 
 const AudioButton = (props: { color: ColorValue, audio: string}) => {
-    const [sound, setSound] = useState();
-        async function playSound() {
-        const { sound } = await Audio.Sound.createAsync(require('@/assets/audio/Abrebotellas.m4a'));
-        setSound(sound);
-        await sound.playAsync();
-  }
-    return (
-      <TouchableOpacity style={styles.iconButton}
-      onPress={playSound}
+  //Carga del audio 
+  const [sound, setSound] = useState();
+      async function playSound() {
+      const { sound } = await Audio.Sound.createAsync(props.audio);
+      setSound(sound);
+      await sound.playAsync();
+}
+  return (
+    <TouchableOpacity style={styles.iconButton}
+    onPress={playSound}
+    >
+      <View
+        contentFit="contain"
+        style={[styles.buttonContainer, { backgroundColor: props.color }]}
       >
-        <View
-          contentFit="contain"
-          style={[styles.buttonContainer, { backgroundColor: props.color }]}
-        >
-          <Image
-            source={VolumIcon}
-            style={styles.buttonImage}
-          />
-        </View>
-      </TouchableOpacity>
-    );
-  }
+        <Image
+          source={VolumIcon}
+          style={styles.buttonImage}
+        />
+      </View>
+    </TouchableOpacity>
+  );
+}
 
+//Estilos
 const styles = StyleSheet.create({
   iconButton: {
     width: 100,

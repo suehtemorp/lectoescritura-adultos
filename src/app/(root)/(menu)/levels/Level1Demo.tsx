@@ -1,8 +1,11 @@
+//Dependencias
 import { Text, View, StyleSheet, TouchableOpacity, ColorValue } from 'react-native';
 
+//Imagenes usadas
 import { Image } from 'expo-image';
 import ImgAbrebo from "@/assets/images/Abrebotellas.jpeg"
 
+//Componentes de botones 
 import AudioButton from '@/components/Levels/AduioButton';
 import ImageContainer from '@/components/Levels/ImgContainer';
 import OptionButton from '@/components/Levels/OptionButton';
@@ -18,13 +21,13 @@ export default function Level1Demo() {
         </View>
         <View style={styles.column}>
           <ImageContainer source={ImgAbrebo} />
-          <AudioButton color={"#D7917B"} audio={"@/assets/audio/Abrebotellas.m4a"} />
+          <AudioButton color={"#D7917B"} audio={require("@/assets/audio/Abrebotellas.m4a")} />
         </View>
       </View>
     </View>
   );
 }
-
+// Estilos
 const styles = StyleSheet.create({
   background: {
     flex: 1,

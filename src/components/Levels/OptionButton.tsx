@@ -1,28 +1,38 @@
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+//Dependencias
+import { TouchableOpacity, ToastAndroid, StyleSheet, Text, View } from 'react-native';
 
 const OptionButton = (props: {option : string, correct : Boolean, color: ColorValue}) => {
+  //Fucniones para dar retroalimentacion inmediata
+  function showToastCorrect() {
+    ToastAndroid.show('✔️ Correcto!', ToastAndroid.SHORT);
+  }
+  function showToastError() {
+    ToastAndroid.show('❌ Incorrecto!', ToastAndroid.SHORT);
+  }
   return (
-      <TouchableOpacity style={styles.iconButton}
-            onPress={() => {
-              if(props.correct == true){
-
-              }else{
-
-              }
-            }}
-        >
-          <View
-            contentFit="contain"
-            style={[styles.buttonContainer, {backgroundColor : props.color}]}
-          >
-            <Text style={styles.buttonText}> 
-                {props.option}
-            </Text> 
-          </View>
-        </TouchableOpacity>
+    <TouchableOpacity style={styles.iconButton}
+      //Eleccion del mensaje 
+      onPress={() => {
+        if(props.correct == true){
+          showToastCorrect();
+        }else{
+          showToastError();
+        }
+      }}
+    >
+      <View
+        contentFit="contain"
+        style={[styles.buttonContainer, {backgroundColor : props.color}]}
+      >
+        <Text style={styles.buttonText}> 
+            {props.option}
+        </Text> 
+      </View>
+    </TouchableOpacity>
   );
   }
 
+//Estilos
 const styles = StyleSheet.create({
   
   iconButton: {
