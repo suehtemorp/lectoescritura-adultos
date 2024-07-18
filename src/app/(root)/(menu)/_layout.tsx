@@ -34,7 +34,7 @@ export default function Layout() {
 
 			{/* Página de ejercicios */}
 			<Drawer.Screen
-				name="SelectExcercise"
+				name="SelectLevelType"
 				options={{
 					headerTitle: () => ScoreHeader("#e6e0e9"),
 					headerTitleAlign: 'center',

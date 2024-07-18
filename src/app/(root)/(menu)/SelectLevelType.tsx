@@ -8,7 +8,7 @@ import { router } from 'expo-router';
 import { LevelClass } from '@/shared/Levels/LevelTypes';
 
 // TODO: Usar colores de estilos
-export default function SelectExcercise () {
+export default function SelectLevelType () {
     return (
         <View style={styles.background}>
             <View style={styles.optionGrid}>

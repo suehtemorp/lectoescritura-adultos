@@ -36,7 +36,7 @@ const MenuPagesDrawerContent = (props : any) => {
 			{/* Icono de ejercicios */}
 			<TouchableOpacity style={styles.drawerButton}
 					onPress={() => {
-						props.navigation.navigate("SelectExcercise");
+						props.navigation.navigate("SelectLevelType");
 					}}
 			>
 				<Image
