@@ -1,7 +1,11 @@
 //Dependencias
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, ImageSourcePropType } from 'react-native';
 
-const ImageContainer = (props: { source: string }) => {
+type ImageContainerProps = { 
+  source: ImageSourcePropType
+} 
+
+const ImageContainer = (props: ImageContainerProps) => {
     return (
       <View style={styles.imgContainer}>
         <Image

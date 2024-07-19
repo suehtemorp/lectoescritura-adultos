@@ -9,6 +9,10 @@ import AudioButton from '@/components/Levels/AduioButton';
 import ImageContainer from '@/components/Levels/ImgContainer';
 import OptionButton from '@/components/Levels/OptionButton';
 
+//Audio utilizado
+import Audio from '@/assets/audio/Abrebotellas.m4a'
+
+
 export default function Level1Demo() {
   return (
     <View style={styles.background}>
@@ -20,7 +24,7 @@ export default function Level1Demo() {
         </View>
         <View style={styles.column}>
           <ImageContainer source={ImgAbrebo} />
-          <AudioButton color={"#D7917B"} audio={require("@/assets/audio/Abrebotellas.m4a")} />
+          <AudioButton color={"#D7917B"} audio={Audio} />
         </View>
       </View>
     </View>

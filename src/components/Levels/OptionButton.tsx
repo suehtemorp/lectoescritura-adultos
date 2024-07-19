@@ -1,13 +1,42 @@
 //Dependencias
-import { TouchableOpacity, ToastAndroid, StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity, ToastAndroid, StyleSheet, Text, View, ColorValue } from 'react-native';
+import { Audio } from 'expo-av';
+import React, { useState} from 'react';
 
-const OptionButton = (props: {option : string, correct : Boolean, color: ColorValue}) => {
+//Audio utilizados
+import AudioCorrect from '@/assets/audio/correcto.m4a'
+import AudioIncorrect from '@/assets/audio/incorrecto.m4a'
+
+type OptionButtonProps = { 
+  option : string, 
+  correct : Boolean, 
+  color: ColorValue
+
+} 
+
+const OptionButton = (props: OptionButtonProps) => {
   //Fucniones para dar retroalimentacion inmediata
   function showToastCorrect() {
-    ToastAndroid.show('✔️ Correcto!', ToastAndroid.SHORT);
+    ToastAndroid.show('✔️', ToastAndroid.SHORT);
   }
   function showToastError() {
-    ToastAndroid.show('❌ Incorrecto!', ToastAndroid.SHORT);
+    ToastAndroid.show('❌', ToastAndroid.SHORT);
+  }
+
+  // Cargas de audios
+  const [soundCorrect, setSoundCorrect] = useState<Audio.Sound | null>(null);
+  const [soundIncorrect, setSoundIncorrect] = useState<Audio.Sound | null>(null);
+
+  async function playSoundCorrect() {
+    const { sound } = await Audio.Sound.createAsync(AudioCorrect);
+    setSoundCorrect(sound);
+    await sound.playAsync();
+  }
+
+  async function playSoundIncorrect() {
+    const { sound } = await Audio.Sound.createAsync(AudioIncorrect);
+    setSoundIncorrect(sound);
+    await sound.playAsync();
   }
   return (
     <TouchableOpacity style={styles.iconButton}
@@ -15,13 +44,14 @@ const OptionButton = (props: {option : string, correct : Boolean, color: ColorVa
       onPress={() => {
         if(props.correct == true){
           showToastCorrect();
+          playSoundCorrect(); 
         }else{
           showToastError();
+          playSoundIncorrect();
         }
       }}
     >
       <View
-        contentFit="contain"
         style={[styles.buttonContainer, {backgroundColor : props.color}]}
       >
         <Text style={styles.buttonText}> 
