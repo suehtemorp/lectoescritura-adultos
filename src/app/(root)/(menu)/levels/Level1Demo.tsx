@@ -5,7 +5,7 @@ import {View, StyleSheet} from 'react-native';
 import ImgAbrebo from "@/assets/images/Abrebotellas.jpeg"
 
 //Componentes de botones 
-import AudioButton from '@/components/Levels/AduioButton';
+import AudioButton from '@/components/Levels/AudioButton';
 import ImageContainer from '@/components/Levels/ImgContainer';
 import OptionButton from '@/components/Levels/OptionButton';
 
