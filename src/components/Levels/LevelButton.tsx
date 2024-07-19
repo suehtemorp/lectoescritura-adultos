@@ -32,7 +32,7 @@ const LevelButton = (props: PropsWithChildren<LevelButtonProps>) => {
             // TODO: Definir rutas
             onPress={() => {
                 if (!props.isBlocked) {
-                    router.navigate("Home");
+                    router.navigate("levels/Level1Demo");
                 }
             }}
         >
