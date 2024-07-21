@@ -2,6 +2,7 @@
 import { TouchableOpacity, ToastAndroid, StyleSheet, Text, View, ColorValue } from 'react-native';
 import { Audio } from 'expo-av';
 import React, { useState} from 'react';
+import { useScore, useScoreAssign } from '@/shared/Score/UserScore';
 
 //Audio utilizados
 import AudioCorrect from '@/assets/audio/correcto.m4a'
@@ -38,13 +39,21 @@ const OptionButton = (props: OptionButtonProps) => {
     setSoundIncorrect(sound);
     await sound.playAsync();
   }
+
+  // Hook para actualizar el puntaje
+  const score = useScore();
+  const scoreAssign = useScoreAssign();
+  const knownScore = score.isLoading || score.isError ?
+			0 : score.data!;
+  
   return (
     <TouchableOpacity style={styles.iconButton}
       //Eleccion del mensaje 
       onPress={() => {
         if(props.correct == true){
           showToastCorrect();
-          playSoundCorrect(); 
+          playSoundCorrect();
+          scoreAssign.mutate(knownScore+50); 
         }else{
           showToastError();
           playSoundIncorrect();
