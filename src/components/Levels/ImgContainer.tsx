@@ -20,8 +20,8 @@ const ImageContainer = (props: ImageContainerProps) => {
 const styles = StyleSheet.create({
   imgContainer: {
     backgroundColor: "#ffffff",
-    width: "100%",
-    height: 120,
+    width: 140,
+    height: 140,
     marginBottom: 10,
     borderWidth: 5,
     borderRadius: 35,

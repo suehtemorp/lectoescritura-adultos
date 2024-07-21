@@ -12,6 +12,7 @@ import { Image } from 'expo-image';
 import HomeLogo from "@/assets/images/home_icon.png";
 import PlayLogo from "@/assets/images/play_icon.png";
 import LearnLogo from "@/assets/images/learn_icon.png";
+import GalleryLogo from "@/assets/images/gallery_icon.png";
 
 // Tablón con íconos de páginas
 const MenuPagesDrawerContent = (props : any) => {
@@ -54,6 +55,19 @@ const MenuPagesDrawerContent = (props : any) => {
 			>
 				<Image
 					source={LearnLogo}
+					contentFit="contain"
+					style={styles.drawerImage}
+				/>
+			</TouchableOpacity>
+
+			{/* Icono de galeria */}
+			<TouchableOpacity style={styles.drawerButton}
+					onPress={() => {
+						props.navigation.navigate("Gallery");
+					}}
+			>
+				<Image
+					source={GalleryLogo}
 					contentFit="contain"
 					style={styles.drawerImage}
 				/>
