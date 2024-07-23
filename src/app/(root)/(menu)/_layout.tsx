@@ -56,7 +56,7 @@ export default function Layout() {
 				}}
 			/>
 
-      {/* Página de ejercicio Demo */}
+      		{/* Página de ejercicio Demo */}
 			<Drawer.Screen
 				name="levels/Level1Demo"
 				options={{
@@ -67,6 +67,19 @@ export default function Layout() {
 					}
 				}}
 			/>
+			
+			{/* Página de ejercicio Demo */}
+			<Drawer.Screen
+				name="Gallery"
+				options={{
+					headerTitle: () => ScoreHeader("#e6e0e9"),
+					headerTitleAlign: 'center',
+					headerStyle: {
+					backgroundColor: "#7BD785",
+					}
+				}}
+			/>
+			
 		</Drawer>
 		</GestureHandlerRootView>
 	);
