@@ -29,50 +29,8 @@ export default function Layout() {
 
 			{/* Página de ejercicios */}
 			<Tabs.Screen
-				name="SelectLevelType"
-				options={{
-					headerTitle: () => ScoreHeader("Vowel"),
-					headerTitleAlign: 'center',
-					headerStyle: {
-					backgroundColor: "#7bd79a",
-					}
-				}}
-			/>
-
-			{/* Sub-página de ejercicios */}
-			<Tabs.Screen
-				name="SelectLevel/[type]"
-				options={{
-					headerTitle: () => ScoreHeader("Vowel"),
-					headerTitleAlign: 'center',
-					headerStyle: {
-					backgroundColor: "#7bd79a",
-					}
-				}}
-			/>
-
-      		{/* Página de ejercicio Demo */}
-			<Tabs.Screen
-				name="levels/Level1Demo"
-				options={{
-					header: () => ScoreHeader("Vowel"),
-					headerTitleAlign: 'center',
-					headerStyle: {
-					backgroundColor: "#7bd79a",
-					}
-				}}
-			/>
-			
-			{/* Página de ejercicio Demo */}
-			<Tabs.Screen
-				name="Gallery"
-				options={{
-					headerTitle: () => ScoreHeader("Vowel"),
-					headerTitleAlign: 'center',
-					headerStyle: {
-					backgroundColor: "#7BD785",
-					}
-				}}
+				name="[type]"
+				options={{ headerShown: false }}
 			/>
 			
 		</Tabs>
