@@ -55,14 +55,12 @@ const styles = StyleSheet.create({
         alignContent: "center",
         alignItems: "center",
         backgroundColor: "#FFEDD3", // TODO: Add named color
-    },
-    image : {
-        width: "70%",
-        height: "70%",
+        width: "100%",
+        height: "100%",
     },
     optionGrid : {
         width: "90%",
-        height: "70%",
+        height: "60%",
         rowGap: "10%",
         columnGap: "10%",
         flexDirection: "row",

@@ -1,42 +1,37 @@
-// Navegador de cajón y componentes
-import { Drawer } from 'expo-router/drawer';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
 // Encabezado de puntaje de jugador
 import ScoreHeader from '@/components/Navigation/ScoreHeader';
 
-// Cajón de íconos de menus
-import MenuDrawerContent from '@/components/Navigation/MenuPagesDrawerContent';
+// Navegador de pila
+import { Stack, Tabs } from 'expo-router';
+
+import { Header } from "@react-navigation/elements";
+import { Text } from 'react-native';
 
 // TODO: Usar colores de estilos
 export default function Layout() {
 	return (
-		<GestureHandlerRootView style={{ flex: 1 }}>
-		<Drawer
-			screenOptions = {{
-				drawerStyle: {width: 200},
+		<Tabs
+			screenOptions={{
+				tabBarStyle: {
+					display: "none"
+				},
 			}}
-			drawerContent = {
-				(props : any) => <MenuDrawerContent {...props} />
-			}
 		>
 			{/* Menu principal */}
-			<Drawer.Screen
+			<Tabs.Screen
 				name="Home"
 				options={{
-					headerTitle: () => ScoreHeader("#cdeda3"),
-					headerTitleAlign: 'center',
-					headerStyle: {
-					backgroundColor: "#FEF7FF",
-					}
+					header: () => ScoreHeader("Vowel"),
+					headerShown: true,
+					headerTransparent: true,
 				}}
 			/>
 
 			{/* Página de ejercicios */}
-			<Drawer.Screen
+			<Tabs.Screen
 				name="SelectLevelType"
 				options={{
-					headerTitle: () => ScoreHeader("#e6e0e9"),
+					headerTitle: () => ScoreHeader("Vowel"),
 					headerTitleAlign: 'center',
 					headerStyle: {
 					backgroundColor: "#7bd79a",
@@ -45,10 +40,10 @@ export default function Layout() {
 			/>
 
 			{/* Sub-página de ejercicios */}
-			<Drawer.Screen
+			<Tabs.Screen
 				name="SelectLevel/[type]"
 				options={{
-					headerTitle: () => ScoreHeader("#e6e0e9"),
+					headerTitle: () => ScoreHeader("Vowel"),
 					headerTitleAlign: 'center',
 					headerStyle: {
 					backgroundColor: "#7bd79a",
@@ -57,10 +52,10 @@ export default function Layout() {
 			/>
 
       		{/* Página de ejercicio Demo */}
-			<Drawer.Screen
+			<Tabs.Screen
 				name="levels/Level1Demo"
 				options={{
-					headerTitle: () => ScoreHeader("#e6e0e9"),
+					header: () => ScoreHeader("Vowel"),
 					headerTitleAlign: 'center',
 					headerStyle: {
 					backgroundColor: "#7bd79a",
@@ -69,10 +64,10 @@ export default function Layout() {
 			/>
 			
 			{/* Página de ejercicio Demo */}
-			<Drawer.Screen
+			<Tabs.Screen
 				name="Gallery"
 				options={{
-					headerTitle: () => ScoreHeader("#e6e0e9"),
+					headerTitle: () => ScoreHeader("Vowel"),
 					headerTitleAlign: 'center',
 					headerStyle: {
 					backgroundColor: "#7BD785",
@@ -80,7 +75,6 @@ export default function Layout() {
 				}}
 			/>
 			
-		</Drawer>
-		</GestureHandlerRootView>
+		</Tabs>
 	);
 }
