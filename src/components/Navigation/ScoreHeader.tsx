@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignContent: "center",
 		alignItems: "center",
-		width: "8%",
+		width: "7.5%",
 		height: "100%",
 	},
 	scoreText : {
