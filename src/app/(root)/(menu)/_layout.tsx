@@ -32,10 +32,10 @@ const styles = StyleSheet.create({
 	},
 	header: {
 		width: "100%",
-		height: "20%",
+		height: "25%",
 	},
 	content: {
 		width: "100%",
-		height: "80%",
+		height: "75%",
 	},
 });

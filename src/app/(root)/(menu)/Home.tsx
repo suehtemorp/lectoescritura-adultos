@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     },
     iconButton: {
         width: "30%",
-        height: "45%",
+        height: "55%",
         justifyContent: "center",
         alignItems: "center",
     },

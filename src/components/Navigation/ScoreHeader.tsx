@@ -3,7 +3,7 @@
 import { useScore } from "@/shared/Score/UserScore";
 
 // UI de React Native
-import { View, Text, StyleSheet, ColorValue, Image } from "react-native";
+import { View, Text, StyleSheet, ColorValue, Image, Pressable, BackHandler } from "react-native";
 
 // Tipos de niveles
 import { LevelClass } from "@/shared/Levels/LevelTypes";
@@ -12,6 +12,7 @@ import { LevelClass } from "@/shared/Levels/LevelTypes";
 import HomeIcon from "@/assets/images/icons/go-home.png"
 import AudioHelp from "@/assets/images/icons/audio-help.png"
 import QuitIcon from "@/assets/images/icons/quit-app.png"
+import { router } from "expo-router";
 
 type ScoreHeaderProps = {
 	levelTheme: LevelClass
@@ -33,12 +34,17 @@ const ScoreHeader = (props : ScoreHeaderProps) => {
 			{/* Volver a pantalla principal + Pedir aclaración */}
 			<View style={styles.leftContainer}> 
 				{/* Volver a casa */}
-				<Image source={HomeIcon} style={[
-					styles.icon, {
-						backgroundColor: ThemeBorder[props.levelTheme],
-						aspectRatio: 1 / 1,
-					}
-				]}/>
+				<Pressable 
+					onPress={ () => {router.replace({ pathname: "/Home" });} } 
+					style={ [styles.icon, {aspectRatio: 1 / 1,}] }
+				>
+					<Image source={HomeIcon} style={[
+						styles.icon, {
+							backgroundColor: ThemeBorder[props.levelTheme],
+							aspectRatio: 1 / 1,
+						}
+					]}/>
+				</Pressable>
 
 				{/* Pedir aclaración por audio */}
 				<Image source={AudioHelp} style={[
@@ -70,12 +76,17 @@ const ScoreHeader = (props : ScoreHeaderProps) => {
 			
 			{/* Salir de la aplicación */}
 			<View style={styles.rightContainer}> 
-				<Image source={QuitIcon} style={[
-					styles.icon, {
-						backgroundColor: ThemeBorder[props.levelTheme],
-						aspectRatio: 128 / 81,
-					}
-				]}/>
+				<Pressable 
+					onPress={ () => {BackHandler.exitApp();} } 
+					style={ [styles.icon, { aspectRatio: 128 / 81,}] }
+				>
+					<Image source={QuitIcon} style={[
+						styles.icon, {
+							backgroundColor: ThemeBorder[props.levelTheme],
+							aspectRatio: 128 / 81,
+						}
+					]}/>
+				</Pressable>
 			</View>
 		</View>
 	); 
