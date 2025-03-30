@@ -13,8 +13,12 @@ import HomeIcon from "@/assets/images/icons/go-home.png"
 import AudioHelp from "@/assets/images/icons/audio-help.png"
 import QuitIcon from "@/assets/images/icons/quit-app.png"
 
+type ScoreHeaderProps = {
+	levelTheme: LevelClass
+}
+
 // Encabezado con el puntaje del jugador
-const ScoreHeader = (levelTheme : LevelClass) => {
+const ScoreHeader = (props : ScoreHeaderProps) => {
 	// Leer puntaje
 	const score = useScore();
 	
@@ -24,24 +28,35 @@ const ScoreHeader = (levelTheme : LevelClass) => {
 
 	return (
 		<View style={[
-			styles.headerGrid, {backgroundColor: ThemeBackground[levelTheme]}
+			styles.headerGrid, {backgroundColor: ThemeBackground[props.levelTheme]}
 		]}>
 			{/* Volver a pantalla principal + Pedir aclaración */}
 			<View style={styles.leftContainer}> 
 				{/* Volver a casa */}
 				<Image source={HomeIcon} style={[
-					styles.leftIcons, {backgroundColor: ThemeBorder[levelTheme]}
+					styles.icon, {
+						backgroundColor: ThemeBorder[props.levelTheme],
+						aspectRatio: 1 / 1,
+					}
 				]}/>
 
 				{/* Pedir aclaración por audio */}
-				<Image source={AudioHelp} style={styles.leftIcons}/>
+				<Image source={AudioHelp} style={[
+					styles.icon, {
+						backgroundColor: ThemeBorder[props.levelTheme],
+						aspectRatio: 128 / 81 ,
+					}
+				]}/>
 			</View>
 
 			{/* Puntaje */}
 			<View style={[
-				styles.centerContainer, {borderColor: ThemeBorder[levelTheme]}
+				styles.centerContainer, {borderColor: ThemeBorder[props.levelTheme]}
 			]}> 
-				<Text style={styles.scoreText}>
+				<Text 
+					style={styles.scoreText} adjustsFontSizeToFit={true}
+					numberOfLines={1} minimumFontScale={.5}
+				>
 					{
 						// Texto de puntaje con mínimo tres dígitos
 						knownScore.toLocaleString(
@@ -55,7 +70,12 @@ const ScoreHeader = (levelTheme : LevelClass) => {
 			
 			{/* Salir de la aplicación */}
 			<View style={styles.rightContainer}> 
-				<Image source={QuitIcon} style={styles.rightIcon}/>
+				<Image source={QuitIcon} style={[
+					styles.icon, {
+						backgroundColor: ThemeBorder[props.levelTheme],
+						aspectRatio: 128 / 81,
+					}
+				]}/>
 			</View>
 		</View>
 	); 
@@ -66,56 +86,49 @@ export default ScoreHeader;
 // Estilos
 const styles = StyleSheet.create({
 	headerGrid: {
-		flexDirection: "row",
-      	alignContent: "center",
-		alignItems: "center",
-		justifyContent: "space-between",
 		width: "100%",
 		height: "100%",
-		backgroundColor: "red",
+		flexDirection: "row",
+
+		justifyContent: "space-between",
+		alignItems: "stretch",
 	},
 	centerContainer : {
+		flex: 2,
+
 		justifyContent: "center",
-		alignContent: "center",
-		alignItems: "center",
+		alignItems: "stretch",
+
 		backgroundColor: 'white',
 		borderColor: '#275CC3',
+		
 		borderRadius: 10,
 		borderWidth: 5,
-		width: "15%",
-		height: "100%",
 	},
 	leftContainer: {
-		justifyContent: "center",
-		alignContent: "center",
-		alignItems: "center",
+		flex: 3,
+
 		flexDirection: "row",
-		width: "15%",
-		height: "100%",
+		justifyContent: "flex-start",
+		alignItems: "stretch",
 	},
 	rightContainer: {
-		justifyContent: "center",
-		alignContent: "center",
-		alignItems: "center",
-		width: "7.5%",
-		height: "100%",
+		flex: 3,
+
+		flexDirection: "row",
+		justifyContent: "flex-end",
+		alignItems: "stretch",
 	},
 	scoreText : {
-		fontSize: 20,
+		fontSize: 30,
 		fontWeight: "bold",
+		textAlign: "center",
 	},
-	leftIcons : {
-		justifyContent: "center",
-		alignContent: "center",
-		width: "50%",
-		height: "100%",
-		resizeMode: "contain",
-	},
-	rightIcon : {
-		justifyContent: "center",
-		alignContent: "flex-end",
-		width: "100%",
-		height: "100%",
+	icon : {
+		// Workaround: https://github.com/facebook/react-native/issues/3686#issuecomment-156280873
+		width: null,
+		height: null,
+		aspectRatio: 1 / 1,
 		resizeMode: "contain",
 	},
 });

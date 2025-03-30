@@ -25,7 +25,7 @@ const LevelTypeButton = (props: {
     return (
         <TouchableOpacity style={styles.iconButton}
             onPress={() => {
-                router.replace({ pathname: "/[type]", params: { type: props.levelType }});
+                router.replace({ pathname: "/LevelSelect", params: { type: props.levelType }});
             }}
         >
             <View style={[

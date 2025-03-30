@@ -1,38 +1,41 @@
-// Encabezado de puntaje de jugador
+// Dependencias
+
+// Contenido a ser dibujado en navegador
 import ScoreHeader from '@/components/Navigation/ScoreHeader';
+import { Slot } from 'expo-router';
 
-// Navegador de pila
-import { Stack, Tabs } from 'expo-router';
+// Elementos visuales de React Native
+import { View, StyleSheet } from 'react-native';
 
-import { Header } from "@react-navigation/elements";
-import { Text } from 'react-native';
-
-// TODO: Usar colores de estilos
 export default function Layout() {
 	return (
-		<Tabs
-			screenOptions={{
-				tabBarStyle: {
-					display: "none"
-				},
-			}}
-		>
-			{/* Menu principal */}
-			<Tabs.Screen
-				name="Home"
-				options={{
-					header: () => ScoreHeader("Vowel"),
-					headerShown: true,
-					headerTransparent: true,
-				}}
-			/>
-
-			{/* Página de ejercicios */}
-			<Tabs.Screen
-				name="[type]"
-				options={{ headerShown: false }}
-			/>
-			
-		</Tabs>
+		<View style={styles.container}>
+			{ /* Encabezado con puntaje */}
+			<View style={styles.header}>
+				<ScoreHeader levelTheme="Vowel"/>
+			</View>
+			{ /* Contenido */}
+			<View style={styles.content}>
+				<Slot/>
+			</View>
+		</View>
 	);
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: 'aliceblue',
+		justifyContent: 'center',
+		alignItems: 'center',
+		gap: 0, 
+	},
+	header: {
+		width: "100%",
+		height: "20%",
+	},
+	content: {
+		width: "100%",
+		height: "80%",
+	},
+});
