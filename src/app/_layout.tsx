@@ -1,5 +1,6 @@
 // Dependencias
 // Consultas y mutaciones de datos
+import { ScoreHeaderContext } from '@/components/Navigation/ScoreHeaderContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Contenido a ser dibujado en navegador
@@ -26,7 +27,9 @@ export default function Layout() {
   return (
     // Inyectar cliente como dependencia a nodos
     <QueryClientProvider client={queryClient}>
-      <Slot />
+      <ScoreHeaderContext.Provider value={ {helpAudio: "MainMenu"} }>
+        <Slot />
+      </ScoreHeaderContext.Provider>
     </QueryClientProvider>
   );
 }
