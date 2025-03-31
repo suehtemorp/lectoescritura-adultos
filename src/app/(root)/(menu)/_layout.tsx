@@ -12,7 +12,7 @@ export default function Layout() {
 		<View style={styles.container}>
 			{ /* Encabezado con puntaje */}
 			<View style={styles.header}>
-				<ScoreHeader levelTheme="Vowel"/>
+				<ScoreHeader/>
 			</View>
 			{ /* Contenido */}
 			<View style={styles.content}>

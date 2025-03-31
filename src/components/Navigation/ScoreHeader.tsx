@@ -3,6 +3,7 @@
 import { useScore } from "@/shared/Score/UserScore";
 
 // UI de React Native
+import { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, ColorValue, Image, Pressable, BackHandler } from "react-native";
 
 // Tipos de niveles
@@ -12,14 +13,19 @@ import { LevelClass } from "@/shared/Levels/LevelTypes";
 import HomeIcon from "@/assets/images/icons/go-home.png"
 import AudioHelp from "@/assets/images/icons/audio-help.png"
 import QuitIcon from "@/assets/images/icons/quit-app.png"
+
+// Audios de ayuda
+import HelpAudios from "@/constants/HelpAudios";
+import { ScoreHeaderContext } from "./ScoreHeaderContext";
+
+// Navegación de Expo
 import { router } from "expo-router";
 
-type ScoreHeaderProps = {
-	levelTheme: LevelClass
-}
+// Reproducción de audio de Expo y React
+import { Audio } from 'expo-av';
 
 // Encabezado con el puntaje del jugador
-const ScoreHeader = (props : ScoreHeaderProps) => {
+const ScoreHeader = () => {
 	// Leer puntaje
 	const score = useScore();
 	
@@ -27,9 +33,48 @@ const ScoreHeader = (props : ScoreHeaderProps) => {
 	const knownScore = score.isLoading || score.isError ?
 			0 : score.data!;
 
+	// Leer información adicional para encabezado
+	const scoreHeaderContext = useContext(ScoreHeaderContext);
+
+	// Escoger paleta de colores según tipo de nivel
+	const backgroundColor = ThemeBackground[scoreHeaderContext.theme ?? "Vowel"];
+
+	// Cargar dirección de audio de ayuda correspondiente
+	const [loadedSound, setLoadedSound] = useState<Audio.Sound>();
+
+	// Cargar y reproducir audio de ayuda previo
+	async function playHelpAudio() {
+		console.debug('Cargando audio de ayuda con nombre ' + scoreHeaderContext.helpAudio);
+		const soundSource = await Audio.Sound.createAsync( HelpAudios[scoreHeaderContext.helpAudio] );
+
+		if (soundSource.status.isLoaded) { // Si cargado con éxito, reproducir
+			// Detener audio previo, en caso de estarse reproduciendo
+			if (loadedSound) {
+				await loadedSound.stopAsync();
+			}
+
+			console.debug('Reproduciendo audio...');
+			
+			setLoadedSound(soundSource.sound);
+			await soundSource.sound.playAsync();
+
+		} else { // Sino, no hacer nada
+			console.error("No se logró cargar el audio");
+			console.error("Error: " + soundSource.status.error);
+		}
+	}
+
+	// Des-cargar audio previo, de haber sido cargado
+	useEffect(() => {
+		return loadedSound ? () => {
+          console.debug('Descargando audio previo');
+          loadedSound.unloadAsync();
+        } : undefined;
+	  }, [scoreHeaderContext]);
+
 	return (
 		<View style={[
-			styles.headerGrid, {backgroundColor: ThemeBackground[props.levelTheme]}
+			styles.headerGrid, {backgroundColor: backgroundColor}
 		]}>
 			{/* Volver a pantalla principal + Pedir aclaración */}
 			<View style={styles.leftContainer}> 
@@ -40,24 +85,29 @@ const ScoreHeader = (props : ScoreHeaderProps) => {
 				>
 					<Image source={HomeIcon} style={[
 						styles.icon, {
-							backgroundColor: ThemeBorder[props.levelTheme],
+							backgroundColor: backgroundColor,
 							aspectRatio: 1 / 1,
 						}
 					]}/>
 				</Pressable>
 
 				{/* Pedir aclaración por audio */}
-				<Image source={AudioHelp} style={[
-					styles.icon, {
-						backgroundColor: ThemeBorder[props.levelTheme],
-						aspectRatio: 128 / 81 ,
-					}
-				]}/>
+				<Pressable 
+					onPress={ () => {playHelpAudio();} } 
+					style={ [styles.icon, {aspectRatio: 128 / 81,}] }
+				>
+					<Image source={AudioHelp} style={[
+						styles.icon, {
+							backgroundColor: backgroundColor,
+							aspectRatio: 128 / 81 ,
+						}
+					]}/>
+				</Pressable>
 			</View>
 
 			{/* Puntaje */}
 			<View style={[
-				styles.centerContainer, {borderColor: ThemeBorder[props.levelTheme]}
+				styles.centerContainer, {borderColor: backgroundColor}
 			]}> 
 				<Text 
 					style={styles.scoreText} adjustsFontSizeToFit={true}
@@ -82,7 +132,7 @@ const ScoreHeader = (props : ScoreHeaderProps) => {
 				>
 					<Image source={QuitIcon} style={[
 						styles.icon, {
-							backgroundColor: ThemeBorder[props.levelTheme],
+							backgroundColor: backgroundColor,
 							aspectRatio: 128 / 81,
 						}
 					]}/>
@@ -131,7 +181,7 @@ const styles = StyleSheet.create({
 		alignItems: "stretch",
 	},
 	scoreText : {
-		fontSize: 30,
+		fontSize: 50,
 		fontWeight: "bold",
 		textAlign: "center",
 	},
@@ -143,13 +193,6 @@ const styles = StyleSheet.create({
 		resizeMode: "contain",
 	},
 });
-
-// Tintes de iconos según tipo de nivel
-const ThemeBorder : { [K in LevelClass]: ColorValue } = {
-	Vowel: "#009621",
-	SimpleConsonant: "#275CC3",
-	AmbiguousConsonant: "#BA1F63",
-};
 
 // y de fondo
 const ThemeBackground : { [K in LevelClass]: ColorValue } = {
