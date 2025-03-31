@@ -1,6 +1,6 @@
 // Dependencias
 // Caché de puntaje
-import { useScore } from "@/shared/Score/UserScore";
+import { useProgress } from "@/shared/Score/UserProgress";
 
 // UI de React Native
 import { useContext, useEffect, useState } from "react";
@@ -27,11 +27,11 @@ import { Audio } from 'expo-av';
 // Encabezado con el puntaje del jugador
 const ScoreHeader = () => {
 	// Leer puntaje
-	const score = useScore();
+	const progress = useProgress();
 	
 	// Si pendiente o en error, asumir cero puntos
-	const knownScore = score.isLoading || score.isError ?
-			0 : score.data!;
+	const knownScore : number = progress.isLoading || progress.isError ?
+			0 : progress.data?.points?? 0;
 
 	// Leer información adicional para encabezado
 	const mainLayoutContext = useContext(MainLayoutContext);
@@ -55,7 +55,8 @@ const ScoreHeader = () => {
 		if (soundSource.status.isLoaded) { // Si cargado con éxito, reproducir
 			// Detener audio previo, en caso de estarse reproduciendo
 			if (loadedSound) {
-				await loadedSound.stopAsync();
+				console.debug('Deteniendo audio previo...');
+				await loadedSound.unloadAsync();
 			}
 
 			console.debug('Reproduciendo audio...');

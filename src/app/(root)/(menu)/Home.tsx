@@ -1,12 +1,26 @@
 import { View, StyleSheet, Text, TouchableOpacity, ColorValue } from "react-native";
 
 // Controlador de navegación
-import { router } from 'expo-router';
+import { router, usePathname } from 'expo-router';
 
 // Posibles tipos de niveles
 import { LevelClass } from '@/shared/Levels/LevelTypes';
+import { useContext, useEffect } from "react";
+import { MainLayoutContext } from "@/components/Navigation/MainLayoutContext";
 
 export default function Home() {
+    // Actualizar audio de ayuda y color cuando ingresa a la página
+    const mainLayoutContext = useContext(MainLayoutContext);
+    const path = usePathname();
+    useEffect(() => {
+        if (mainLayoutContext) {
+            mainLayoutContext.setMainLayoutInformation({
+                theme: "MainMenu",
+                helpAudio: "MainMenu"
+            });
+        }
+    }, [path]);
+
 return ( 
     <View style={styles.background}> 
         <View style={styles.optionGrid}>

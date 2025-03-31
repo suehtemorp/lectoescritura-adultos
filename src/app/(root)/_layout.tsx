@@ -5,7 +5,7 @@ import { Slot } from 'expo-router';
 
 // Información sobre color según tema
 import { useContext } from 'react';
-import { MainLayoutContext, MainLayoutInformation } from '@/components/Navigation/MainLayoutContext';
+import { MainLayoutContext } from '@/components/Navigation/MainLayoutContext';
 import { LevelPalette } from '@/constants/Colors';
 
 // Encabezado con puntaje
