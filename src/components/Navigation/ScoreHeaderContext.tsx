@@ -1,13 +1,13 @@
-import { LevelClass } from '@/shared/Levels/LevelTypes';
 import HelpAudios from '@/constants/HelpAudios';
 
 import { createContext } from 'react';
+import { LevelPalette } from '@/constants/Colors';
 
 type ScoreHeaderContextType = {
-    theme?: LevelClass,
+    theme: keyof typeof LevelPalette,
     helpAudio: keyof typeof HelpAudios,
 };
 
 export const ScoreHeaderContext = createContext<ScoreHeaderContextType>(
-    { helpAudio: "MainMenu",}
+    { theme: "MainMenu", helpAudio: "MainMenu", }
 );

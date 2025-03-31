@@ -27,7 +27,7 @@ export default function Layout() {
   return (
     // Inyectar cliente como dependencia a nodos
     <QueryClientProvider client={queryClient}>
-      <ScoreHeaderContext.Provider value={ {helpAudio: "MainMenu"} }>
+      <ScoreHeaderContext.Provider value={ { theme: "MainMenu", helpAudio: "MainMenu", } }>
         <Slot />
       </ScoreHeaderContext.Provider>
     </QueryClientProvider>

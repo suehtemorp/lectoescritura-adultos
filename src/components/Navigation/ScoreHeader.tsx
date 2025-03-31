@@ -4,10 +4,10 @@ import { useScore } from "@/shared/Score/UserScore";
 
 // UI de React Native
 import { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, ColorValue, Image, Pressable, BackHandler } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable, BackHandler } from "react-native";
 
 // Tipos de niveles
-import { LevelClass } from "@/shared/Levels/LevelTypes";
+import { LevelPalette } from "@/constants/Colors";
 
 // Íconos de encabezado
 import HomeIcon from "@/assets/images/icons/go-home.png"
@@ -37,7 +37,8 @@ const ScoreHeader = () => {
 	const scoreHeaderContext = useContext(ScoreHeaderContext);
 
 	// Escoger paleta de colores según tipo de nivel
-	const backgroundColor = ThemeBackground[scoreHeaderContext.theme ?? "Vowel"];
+	const barColor = LevelPalette[scoreHeaderContext.theme].soft;
+	const edgeColor = LevelPalette[scoreHeaderContext.theme].hard;
 
 	// Cargar dirección de audio de ayuda correspondiente
 	const [loadedSound, setLoadedSound] = useState<Audio.Sound>();
@@ -74,7 +75,7 @@ const ScoreHeader = () => {
 
 	return (
 		<View style={[
-			styles.headerGrid, {backgroundColor: backgroundColor}
+			styles.headerGrid, {backgroundColor: barColor}
 		]}>
 			{/* Volver a pantalla principal + Pedir aclaración */}
 			<View style={styles.leftContainer}> 
@@ -85,7 +86,7 @@ const ScoreHeader = () => {
 				>
 					<Image source={HomeIcon} style={[
 						styles.icon, {
-							backgroundColor: backgroundColor,
+							backgroundColor: barColor,
 							aspectRatio: 1 / 1,
 						}
 					]}/>
@@ -98,7 +99,7 @@ const ScoreHeader = () => {
 				>
 					<Image source={AudioHelp} style={[
 						styles.icon, {
-							backgroundColor: backgroundColor,
+							backgroundColor: barColor,
 							aspectRatio: 128 / 81 ,
 						}
 					]}/>
@@ -107,7 +108,7 @@ const ScoreHeader = () => {
 
 			{/* Puntaje */}
 			<View style={[
-				styles.centerContainer, {borderColor: backgroundColor}
+				styles.centerContainer, {borderColor: edgeColor}
 			]}> 
 				<Text 
 					style={styles.scoreText} adjustsFontSizeToFit={true}
@@ -132,7 +133,7 @@ const ScoreHeader = () => {
 				>
 					<Image source={QuitIcon} style={[
 						styles.icon, {
-							backgroundColor: backgroundColor,
+							backgroundColor: barColor,
 							aspectRatio: 128 / 81,
 						}
 					]}/>
@@ -153,18 +154,20 @@ const styles = StyleSheet.create({
 
 		justifyContent: "space-between",
 		alignItems: "stretch",
+		alignContent: "center",
 	},
 	centerContainer : {
 		flex: 2,
+		height: "80%",
 
 		justifyContent: "center",
-		alignItems: "stretch",
+		alignSelf: "center",
 
 		backgroundColor: 'white',
 		borderColor: '#275CC3',
 		
-		borderRadius: 10,
-		borderWidth: 5,
+		borderRadius: 30,
+		borderWidth: 9,
 	},
 	leftContainer: {
 		flex: 3,
@@ -181,7 +184,7 @@ const styles = StyleSheet.create({
 		alignItems: "stretch",
 	},
 	scoreText : {
-		fontSize: 50,
+		fontSize: 30,
 		fontWeight: "bold",
 		textAlign: "center",
 	},
@@ -193,10 +196,3 @@ const styles = StyleSheet.create({
 		resizeMode: "contain",
 	},
 });
-
-// y de fondo
-const ThemeBackground : { [K in LevelClass]: ColorValue } = {
-	Vowel: "#09B930",
-	SimpleConsonant: "#5A92FE",
-	AmbiguousConsonant: "#EE5A9B",
-}

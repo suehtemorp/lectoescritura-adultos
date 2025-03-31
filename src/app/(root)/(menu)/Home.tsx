@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignContent: "center",
         alignItems: "center",
-        backgroundColor: "#FFEDD3", // TODO: Add named color
         width: "100%",
         height: "100%",
     },
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         width: "100%",
         height: "100%",
-        borderWidth: 5,
+        borderWidth: 7,
         borderRadius: 35,
         justifyContent: "center",
         alignContent: "center",
