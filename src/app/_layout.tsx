@@ -1,6 +1,5 @@
 // Dependencias
 // Consultas y mutaciones de datos
-import { ScoreHeaderContext } from '@/components/Navigation/ScoreHeaderContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Contenido a ser dibujado en navegador
@@ -11,6 +10,10 @@ const queryClient = new QueryClient();
 
 // Orientación de la patalla
 import * as ScreenOrientation from "expo-screen-orientation"; 
+
+// Contexto inicial de la aplicación
+import { MainLayoutContext, MainLayoutInformation } from '@/components/Navigation/MainLayoutContext';
+import { useState } from 'react';
 
 export default function Layout() {
   // Ajustar orientación de pantalla a horizontal si el dispositivo lo soporta 
@@ -24,12 +27,17 @@ export default function Layout() {
       }
     });
 
+  // Establecer paleta de colores y audio de ayuda
+  const [mainLayoutInformation, setMainLayoutInformation] = 
+    useState<MainLayoutInformation>( {theme: "MainMenu", helpAudio: "MainMenu"} );
+
   return (
     // Inyectar cliente como dependencia a nodos
     <QueryClientProvider client={queryClient}>
-      <ScoreHeaderContext.Provider value={ { theme: "MainMenu", helpAudio: "MainMenu", } }>
+      { /* Inyectar dependencia de contexto incial de la aplicación */ }
+      <MainLayoutContext.Provider value={ { mainLayoutInformation, setMainLayoutInformation } }>
         <Slot />
-      </ScoreHeaderContext.Provider>
+      </MainLayoutContext.Provider>
     </QueryClientProvider>
   );
 }

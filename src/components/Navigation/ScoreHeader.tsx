@@ -16,7 +16,7 @@ import QuitIcon from "@/assets/images/icons/quit-app.png"
 
 // Audios de ayuda
 import HelpAudios from "@/constants/HelpAudios";
-import { ScoreHeaderContext } from "./ScoreHeaderContext";
+import { MainLayoutContext } from "./MainLayoutContext";
 
 // Navegación de Expo
 import { router } from "expo-router";
@@ -34,19 +34,23 @@ const ScoreHeader = () => {
 			0 : score.data!;
 
 	// Leer información adicional para encabezado
-	const scoreHeaderContext = useContext(ScoreHeaderContext);
+	const mainLayoutContext = useContext(MainLayoutContext);
+
+	// Si no hay ninguna establecida, utilizar la del menu principal
+	const mainLayoutInformation = mainLayoutContext?.mainLayoutInformation ?? 
+		{ theme: "MainMenu", helpAudio:  "MainMenu"};
 
 	// Escoger paleta de colores según tipo de nivel
-	const barColor = LevelPalette[scoreHeaderContext.theme].soft;
-	const edgeColor = LevelPalette[scoreHeaderContext.theme].hard;
+	const barColor = LevelPalette[mainLayoutInformation.theme].soft;
+	const edgeColor = LevelPalette[mainLayoutInformation.theme].hard;
 
 	// Cargar dirección de audio de ayuda correspondiente
 	const [loadedSound, setLoadedSound] = useState<Audio.Sound>();
 
 	// Cargar y reproducir audio de ayuda previo
 	async function playHelpAudio() {
-		console.debug('Cargando audio de ayuda con nombre ' + scoreHeaderContext.helpAudio);
-		const soundSource = await Audio.Sound.createAsync( HelpAudios[scoreHeaderContext.helpAudio] );
+		console.debug('Cargando audio de ayuda con nombre ' + mainLayoutInformation.helpAudio);
+		const soundSource = await Audio.Sound.createAsync( HelpAudios[mainLayoutInformation.helpAudio] );
 
 		if (soundSource.status.isLoaded) { // Si cargado con éxito, reproducir
 			// Detener audio previo, en caso de estarse reproduciendo
@@ -71,7 +75,7 @@ const ScoreHeader = () => {
           console.debug('Descargando audio previo');
           loadedSound.unloadAsync();
         } : undefined;
-	  }, [scoreHeaderContext]);
+	  }, [mainLayoutContext]);
 
 	return (
 		<View style={[

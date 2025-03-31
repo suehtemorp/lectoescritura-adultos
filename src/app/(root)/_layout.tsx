@@ -5,7 +5,7 @@ import { Slot } from 'expo-router';
 
 // Información sobre color según tema
 import { useContext } from 'react';
-import { ScoreHeaderContext } from '@/components/Navigation/ScoreHeaderContext';
+import { MainLayoutContext, MainLayoutInformation } from '@/components/Navigation/MainLayoutContext';
 import { LevelPalette } from '@/constants/Colors';
 
 // Encabezado con puntaje
@@ -15,9 +15,14 @@ import ScoreHeader from '@/components/Navigation/ScoreHeader';
 import { View, StyleSheet } from 'react-native';
 
 export default function Layout() {
-	// Descubrir color de paisaje
-	const scoreHeaderContext = useContext(ScoreHeaderContext);
-	const backgroundColor = LevelPalette[scoreHeaderContext.theme ?? "Vowel"].background;
+	// Leer información adicional para color de fondo
+	const mainLayoutContext = useContext(MainLayoutContext);
+	
+	// Si no hay ninguna establecida, utilizar la del menu principal
+	const theme = mainLayoutContext?.mainLayoutInformation.theme ?? 
+		"MainMenu";
+
+	const backgroundColor = LevelPalette[theme].background;
 
 	return (
 		<View style={styles.container}>
