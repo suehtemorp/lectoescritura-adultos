@@ -173,6 +173,8 @@ const styles = StyleSheet.create({
 		
 		borderRadius: 30,
 		borderWidth: 9,
+
+		filter: [{dropShadow: "black 0 10 30"}],
 	},
 	leftContainer: {
 		flex: 3,

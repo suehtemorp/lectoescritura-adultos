@@ -53,11 +53,11 @@ export default function SelectLevel () {
     return (
         <View style={styles.background}>
             <View style={styles.iconGrid}>
-                <LevelButton levelIndex={1} levelType={levelType} isBlocked={false} bgColor={"#7bd785"} />
-                <LevelButton levelIndex={2} levelType={levelType} isBlocked={levelIndex < 1} bgColor={"#d7b27b"} />
-                <LevelButton levelIndex={3} levelType={levelType} isBlocked={levelIndex < 2} bgColor={"#d7917b"} />
-                <LevelButton levelIndex={4} levelType={levelType} isBlocked={levelIndex < 3} bgColor={"#d7917b"} />
-                <LevelButton levelIndex={5} levelType={levelType} isBlocked={levelIndex < 4} bgColor={"#d7917b"} />
+                <LevelButton levelIndex={1} levelType={levelType} />
+                <LevelButton levelIndex={2} levelType={levelType} />
+                <LevelButton levelIndex={3} levelType={levelType} />
+                <LevelButton levelIndex={4} levelType={levelType} />
+                <LevelButton levelIndex={5} levelType={levelType} />
             </View>
         </View>
     );
@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignContent: "center",
         alignItems: "center",
-        backgroundColor: "#cdeda3",
     },
     iconGrid : {
         width: "100%",

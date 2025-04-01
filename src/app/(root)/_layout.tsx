@@ -41,7 +41,6 @@ export default function Layout() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: 'aliceblue',
 		justifyContent: 'center',
 		alignItems: 'center',
 		gap: 0, 
