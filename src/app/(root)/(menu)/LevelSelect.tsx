@@ -1,5 +1,5 @@
 // UI de React Native
-import { View, StyleSheet, ColorValue } from 'react-native';
+import { View, StyleSheet, ColorValue, Text } from 'react-native';
 
 // Navegación y parámetros de URL
 import { useLocalSearchParams, usePathname } from 'expo-router';
@@ -18,7 +18,7 @@ import { useProgress } from '@/shared/Score/UserProgress';
 // Audios de ayuda
 import HelpAudios from '@/constants/HelpAudios';
 
-export default function SelectLevel () {
+export default function LevelSelect () {
     // Obtener tipo de nivel a usar en selección
     const { type: levelType } = useLocalSearchParams<{ type: LevelClass }>();
     
