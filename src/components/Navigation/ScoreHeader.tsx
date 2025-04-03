@@ -10,9 +10,9 @@ import { View, Text, StyleSheet, Image, Pressable, BackHandler } from "react-nat
 import { LevelPalette } from "@/constants/Colors";
 
 // Íconos de encabezado
-import HomeIcon from "@/assets/images/icons/go-home.png"
-import AudioHelp from "@/assets/images/icons/audio-help.png"
-import QuitIcon from "@/assets/images/icons/quit-app.png"
+import HomeIcon from "@/assets/images/icons/Go_Home.png"
+import AudioHelp from "@/assets/images/icons/Audio_Help.png"
+import QuitIcon from "@/assets/images/icons/Quit_App.png"
 
 // Audios de ayuda
 import HelpAudios from "@/constants/HelpAudios";
