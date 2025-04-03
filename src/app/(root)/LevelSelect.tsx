@@ -26,6 +26,8 @@ export default function LevelSelect () {
         throw Error("Tipo de nivel indefinido en selección de niveles");
     }
 
+    console.debug("Mostrando niveles para minijuego " + levelType);
+
     // Obtener progreso de usuario en nivel
     const progress = useProgress();
     const levelIndex : number = progress.isLoading || progress.isError ?

@@ -1,5 +1,5 @@
 //Dependencias
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, Image, ColorValue, Text} from 'react-native';
 
 // Tipografía
@@ -15,11 +15,19 @@ import GameObjects from '@/constants/GameObjects';
 import GameLetters from '@/constants/GameLetters';
 
 // Soporte para audio descriptivo
+import { Audio } from 'expo-av';
+import HelpAudios from '@/constants/HelpAudios';
 import FrameWithAudio from "@/components/Levels/FrameWithAudio";
 
 // Actualizar color de tema
 import { MainLayoutContext } from '@/components/Navigation/MainLayoutContext';
 import { LevelPalette } from '@/constants/Colors';
+
+// Actualizar progreso del jugador
+import { useProgress, useProgressAssign } from '@/shared/Score/UserProgress';
+
+// Navegación de Expo
+import { router } from "expo-router";
 
 export default function Game() {
   // Obtener tipo de nivel y número para indizar
@@ -66,9 +74,95 @@ export default function Game() {
   // Determinar datos del nivel
   const levelData = LevelData[levelType][levelIndex];
 
+  console.log("Ejercicio: " + levelType + " de nivel " + levelIndex + 
+    " => Modalidad: " + levelData.minigame);
   Object.entries(levelData.options).map(([x, y]) => {
-    console.debug("Opción " + x + " respuesta " + y);
-  })
+    console.debug("Opción:" + x + " => Respuesta: " + y);
+  });
+
+  // Reproducir audio cuando el usuario escoge una opción
+  const [loadedSound, setLoadedSound] = useState<Audio.Sound>();
+	async function playHelpAudio(choice: "win" | "loss") {
+		console.debug('Cargando audio de retroalimentación de ' + choice);
+		const soundSource = await Audio.Sound.createAsync( HelpAudios[choice] );
+
+		if (soundSource.status.isLoaded) { // Si cargado con éxito, reproducir
+			// Detener audio previo, en caso de estarse reproduciendo
+			if (loadedSound) {
+				console.debug('Deteniendo audio previo...');
+				await loadedSound.unloadAsync();
+			}
+
+			console.debug('Reproduciendo audio...');
+			
+			setLoadedSound(soundSource.sound);
+			await soundSource.sound.playAsync();
+
+		} else { // Sino, no hacer nada
+			console.error("No se logró cargar el audio");
+			console.error("Error: " + soundSource.status.error);
+		}
+	}
+
+	// Des-cargar audio previo, de haber sido cargado
+	useEffect(() => {
+		return loadedSound ? () => {
+        console.debug('Descargando audio previo');
+        loadedSound.unloadAsync();
+      } : undefined;
+  }, [loadedSound]);
+
+  // Llevar cuenta del progreso y actualizar puntos del jugador acordemente
+  const progress = useProgress();
+  const progressAssign = useProgressAssign();
+
+  const knownScore : number = progress.isLoading || progress.isError ?
+    0 : progress.data?.points?? 0;
+  const levelsCompleted = progress.isLoading || progress.isError ?
+    0 : progress.data?.levels_completed[levelType]?? 0;
+
+  // Informar al usuario cuando se equivoca
+  const onLoss = () => {
+    console.log("User lost!");
+    playHelpAudio("loss");
+  };
+
+  // Informar al usuario cuando gana, actualizar su progreso, y volver a 
+  // pantalla de selección de niveles
+  const onWin = () => {
+    console.log("User won!");
+    if (
+      (! progressAssign.isError) && (! progressAssign.isPending)
+    ) {
+      if (
+        (parseInt(levelIndex) === levelsCompleted + 1) && progress.data
+      ) {
+        const reward = levelType === "Vowel" ? 10 :
+          levelType === "SimpleConsonant" ? 20 : 30;
+  
+        progressAssign.mutateAsync({
+          points: knownScore + reward,
+          levels_completed: {
+            "Vowel": levelType === "Vowel" ? levelsCompleted + 1 
+              : progress.data.levels_completed.Vowel,
+            "SimpleConsonant": levelType === "SimpleConsonant" ? levelsCompleted + 1 
+              : progress.data.levels_completed.SimpleConsonant,
+            "AmbiguousConsonant": levelType === "AmbiguousConsonant" ? levelsCompleted + 1 
+              : progress.data.levels_completed.AmbiguousConsonant,
+          }
+        }).then(() => {
+          console.debug("Progress updated succesfully");
+        }, (err) => {
+          console.error("Unable to update progress: " + err);
+        });
+      }
+
+      playHelpAudio("win");
+      setTimeout(() => {
+        router.replace({ pathname: "/LevelSelect", params: { type: levelType }});
+      }, 1500);
+    }
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -80,8 +174,7 @@ export default function Game() {
               Object.entries(levelData.options).map(([optionIndex, optionLetter]) => {
                 return <FrameWithAudio audio={GameLetters[optionLetter]} 
                   style={styles.lhs_choice} onTap={
-                    `${levelData.solution}` === optionIndex ? () => {console.log("Win")}
-                  : () => {console.log("Lose")}
+                    `${levelData.solution}` === optionIndex ? onWin : onLoss
                 } key={optionIndex}>
                   <View style={[styles.letter_background, {borderColor: borderColor}]}>
                     <Text style={styles.letter} adjustsFontSizeToFit={true} 
@@ -93,9 +186,8 @@ export default function Game() {
               Object.entries(levelData.options).map(([optionIndex, optionImage]) => {
                 return <FrameWithAudio audio={GameObjects[optionImage].sound} 
                   style={styles.lhs_choice} onTap={
-                    `${levelData.solution}` === optionIndex ? () => {console.log("Win")}
-                  : () => {console.log("Lose")}
-                }>
+                    `${levelData.solution}` === optionIndex ? onWin : onLoss
+                } key={optionIndex}>
                   <Image source={GameObjects[optionImage].image} style={[styles.image, {borderColor: borderColor}]} />
                 </FrameWithAudio>
               })
