@@ -6,6 +6,9 @@ const HelpAudios = {
     "Level_4" : require("@/assets/audio/Level_4.m4a"),
     "Level_5" : require("@/assets/audio/Level_5.m4a"),
     "Level_Complete" : require("@/assets/audio/Level_Complete.m4a"),
+    "Vowel" : require("@/assets/audio/Main_Menu.m4a"),
+    "SimpleConsonant" : require("@/assets/audio/Level_Complete.m4a"),
+    "AmbiguousConsonant" : require("@/assets/audio/Level_Complete.m4a"),
 };
 
 export default HelpAudios;

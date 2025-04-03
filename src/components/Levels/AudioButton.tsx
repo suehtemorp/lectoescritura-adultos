@@ -1,67 +1,58 @@
 //Dependencias
-import React, { useState} from 'react';
-import { TouchableOpacity, StyleSheet, View, Image,ColorValue } from 'react-native';
-import { Audio } from 'expo-av';
+import React, { useEffect, useState} from 'react';
+import { Pressable, StyleSheet, Image, StyleProp, ViewStyle, View } from 'react-native';
+import { Audio, AVPlaybackSource } from 'expo-av';
 
 //Imagenes utilizadas
-import VolumIcon from '@/assets/images/volum_icon.png';
+import SoundIcon from '@/assets/images/icons/Object_Sound_Button.png';
 
+const AudioButton = (props: {audio: AVPlaybackSource, style?: StyleProp<ViewStyle>} ) => {
 
-type AudioButtonProps = { 
-  audio: any, 
-  color: ColorValue,
-
-} 
-
-const AudioButton = (props: AudioButtonProps) => {
-  // Carga del audio 
-  const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const [sound, setSound] = useState<Audio.Sound>();
 
   async function playSound() {
+    console.log('Cargando audio descriptivo de objeto ' +  props.audio.toString());
+    
     const { sound } = await Audio.Sound.createAsync(props.audio);
     setSound(sound);
+
+    console.log('Reproduciendo audio');
     await sound.playAsync();
   }
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          console.log('Descargando audio descriptivo de objeto ' + props.audio.toString());
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
+
   return (
-    <TouchableOpacity style={styles.iconButton}
-    onPress={playSound}
-    >
-      <View
-        style={[styles.buttonContainer, { backgroundColor: props.color }]}
-      >
-        <Image
-          source={VolumIcon}
-          style={styles.buttonImage}
-        />
-      </View>
-    </TouchableOpacity>
+    <View style={props.style ?? styles.defaultViewStyle}>
+      <Pressable style={styles.iconButton} onPress={playSound}>
+        <Image source={SoundIcon} style={styles.buttonImage} />
+      </Pressable>
+    </View>
   );
 }
 
 //Estilos
 const styles = StyleSheet.create({
-  iconButton: {
-    width: 100,
-    height: 100,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 10,
+  defaultViewStyle: {
+    width: "100%", 
+    height: "100%"
   },
-  buttonContainer: {
+  iconButton: {
     width: "100%",
     height: "100%",
-    borderWidth: 5,
-    borderRadius: 35,
     justifyContent: "center",
     alignItems: "center",
-    overflow: 'hidden',
-    borderColor: "black",
-    backgroundColor: "white",
   },
   buttonImage: {
-    width: "90%",
-    height: "90%",
-    borderRadius: 25,
+    width: "100%",
+    height: "100%",
   },
 });
 

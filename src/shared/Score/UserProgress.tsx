@@ -43,6 +43,7 @@ export const useProgress = () => {
 
                 // TODO: Hacer chequeos type-safe
                 console.debug("Previous user progress found");
+                console.debug("Contents: " + value);
                 return JSON.parse(value) as UserProgress;
             }
         )

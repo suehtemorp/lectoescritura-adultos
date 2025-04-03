@@ -42,7 +42,7 @@ const LevelButton = (props: PropsWithChildren<LevelButtonProps>) => {
         : levelState === "available" ? LevelPalette[props.levelType].soft
         : LevelPalette[props.levelType].hard;
 
-    const borderColor : ColorValue = levelState === "locked" ? "grey"
+    const borderColor : ColorValue = levelState === "locked" ? "#616363"
         : LevelPalette[props.levelType].hard;
 
     // Ícono de completado también depende de su tipo
@@ -56,7 +56,11 @@ const LevelButton = (props: PropsWithChildren<LevelButtonProps>) => {
             // TODO: Definir rutas
             onPress={() => {
                 if (levelState !== "locked") {
-                    router.navigate("/levels/Level1Demo");
+                    router.replace({ 
+                        pathname: "/Game", params: {
+                        type: props.levelType, index: props.levelIndex 
+                        }
+                    });
                 }
             }}
         >
