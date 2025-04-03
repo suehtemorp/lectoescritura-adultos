@@ -82,7 +82,7 @@ export default function Game() {
                   style={styles.lhs_choice} onTap={
                     `${levelData.solution}` === optionIndex ? () => {console.log("Win")}
                   : () => {console.log("Lose")}
-                }>
+                } key={optionIndex}>
                   <View style={[styles.letter_background, {borderColor: borderColor}]}>
                     <Text style={styles.letter} adjustsFontSizeToFit={true} 
                       numberOfLines={1} minimumFontScale={.5}>{optionLetter}</Text>
