@@ -16,5 +16,8 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-  ]
+  ],
+  "sourceRoot": "./",
+  "sourceMap": true,
+  "inlineSourceMap": true,
 }
