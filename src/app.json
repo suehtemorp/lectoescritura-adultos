@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Lectoescritura",
-    "slug": "Lectoescritura",
+    "name": "Lecto Escritura",
+    "slug": "lectoescritura",
     "version": "1.0.0",
     "newArchEnabled": true,
     "orientation": "landscape",
@@ -28,6 +28,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "a1d8b450-2217-4691-9aae-61aa081ac932"
+      }
     }
   }
 }
