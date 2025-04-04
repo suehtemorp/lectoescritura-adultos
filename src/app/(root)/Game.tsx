@@ -55,19 +55,6 @@ export default function Game() {
     }
   }, [fontLoaded, fontError]);
 
-  // Actualizar audio de ayuda y color cuando ingresa a la página según tipo
-  // de nivel y progreso
-  const mainLayoutContext = useContext(MainLayoutContext);
-  const path = usePathname();
-  useEffect(() => {
-    if (mainLayoutContext) {
-        mainLayoutContext.setMainLayoutInformation({
-            theme: levelType,
-            helpAudio: levelType
-        });
-    }
-  }, [path]);
-
   // Determinar color de bordes para letras e imagen
   const borderColor : ColorValue = LevelPalette[levelType].hard;
 
@@ -80,11 +67,25 @@ export default function Game() {
     console.debug("Opción:" + x + " => Respuesta: " + y);
   });
 
+  // Actualizar audio de ayuda y color cuando ingresa a la página según tipo
+  // de nivel y progreso
+  const mainLayoutContext = useContext(MainLayoutContext);
+  const path = usePathname();
+  useEffect(() => {
+    if (mainLayoutContext) {
+        mainLayoutContext.setMainLayoutInformation({
+            theme: levelType,
+            helpAudio: levelData.minigame === "letter" 
+              ? "Letters_Minigame" : "Objects_Minigame"
+        });
+    }
+  }, [path]);
+
   // Reproducir audio cuando el usuario escoge una opción
   const [loadedSound, setLoadedSound] = useState<Audio.Sound>();
-	async function playHelpAudio(choice: "win" | "loss") {
+	async function playHelpAudio(choice: "Correct_Answer" | "Incorrect_Answer") {
 		console.debug('Cargando audio de retroalimentación de ' + choice);
-		const soundSource = await Audio.Sound.createAsync( HelpAudios[choice] );
+		const soundSource = await Audio.Sound.createAsync(HelpAudios[choice] );
 
 		if (soundSource.status.isLoaded) { // Si cargado con éxito, reproducir
 			// Detener audio previo, en caso de estarse reproduciendo
@@ -124,7 +125,7 @@ export default function Game() {
   // Informar al usuario cuando se equivoca
   const onLoss = () => {
     console.log("User lost!");
-    playHelpAudio("loss");
+    playHelpAudio("Incorrect_Answer");
   };
 
   // Informar al usuario cuando gana, actualizar su progreso, y volver a 
@@ -157,7 +158,7 @@ export default function Game() {
         });
       }
 
-      playHelpAudio("win");
+      playHelpAudio("Correct_Answer");
       setTimeout(() => {
         router.replace({ pathname: "/LevelSelect", params: { type: levelType }});
       }, 1500);
